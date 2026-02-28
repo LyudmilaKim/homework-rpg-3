@@ -16,12 +16,16 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("=== RPG Battle Engine Demo ===\n");
 
-        // TODO: Create heroes and enemies
         Warrior warrior = new Warrior("Arthas");
         Mage mage = new Mage("Jaina");
         Goblin goblin = new Goblin();
 
-        // TODO: Wrap with adapters
+        System.out.println("Before battle:");
+        System.out.printf("  %-10s HP: %d%n", warrior.getName(), warrior.getHealth());
+        System.out.printf("  %-10s HP: %d%n", mage.getName(), mage.getHealth());
+        System.out.printf("  %-10s HP: %d%n", goblin.getTitle(), goblin.getHealth());
+        System.out.println();
+
         List<Combatant> heroes = new ArrayList<>();
         heroes.add(new HeroCombatantAdapter(warrior));
         heroes.add(new HeroCombatantAdapter(mage));
@@ -29,22 +33,33 @@ public class Main {
         List<Combatant> enemies = new ArrayList<>();
         enemies.add(new EnemyCombatantAdapter(goblin));
 
-        // TODO: Demonstrate Singleton behavior
         BattleEngine engineA = BattleEngine.getInstance();
         BattleEngine engineB = BattleEngine.getInstance();
-        System.out.println("Same instance? " + (engineA == engineB));
+        System.out.println("Singleton check: " + (engineA == engineB));
         System.out.println();
 
-        // TODO: Run battle and print summary
         engineA.setRandomSeed(42L);
         EncounterResult result = engineA.runEncounter(heroes, enemies);
 
-        System.out.println("Winner: " + result.getWinner());
-        System.out.println("Rounds: " + result.getRounds());
+        System.out.println("╔════════════════════════════════════════════╗");
+        System.out.println("║              BATTLE SUMMARY                ║");
+        System.out.println("╠════════════════════════════════════════════╣");
+        System.out.printf ("  Winner : %s%n", result.getWinner());
+        System.out.printf ("  Rounds  : %d%n", result.getRounds());
+        System.out.println("╚════════════════════════════════════════════╝\n");
+
+        System.out.println("Battle Log:");
+        System.out.println("────────────────────────────────────────────");
         for (String line : result.getBattleLog()) {
             System.out.println(line);
         }
+        System.out.println("────────────────────────────────────────────");
 
-        System.out.println("\n=== Demo Complete ===");
+        System.out.println("\nAfter battle:");
+        System.out.printf("  %-10s HP: %d%n", warrior.getName(), warrior.getHealth());
+        System.out.printf("  %-10s HP: %d%n", mage.getName(), mage.getHealth());
+        System.out.printf("  %-10s HP: %d%n", goblin.getTitle(), goblin.getHealth());
+
+        System.out.println("\n=== Demo complete ===");
     }
 }

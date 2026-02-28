@@ -7,7 +7,6 @@ public class Warrior implements Hero {
 
     public Warrior(String name) {
         this.name = name;
-        // TODO: tune stats if needed
         this.power = 20;
         this.health = 120;
     }
